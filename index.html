@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>COLORFUL FANTASY</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="logo-container">
+        <div class="logo">
+            <span class="c">C</span><span class="o1">O</span><span class="l">L</span><span class="o2">O</span><span class="r">R</span><span class="f">F</span><span class="u">U</span><span class="l2">L</span>
+            <br>
+            <div class="subtitle">FANTASY</div>
+        </div>
+    </div>
+    <div class="phone">
+        646-396-0066
+    </div>
+    <div class="time">
+        10AM-4AM
+    </div>
+
+    <div class="gallery">
+        <div class="thumbnails">
+            <img src="images/1.jpg" alt="图片1" onclick="openLightbox(0)">
+            <img src="images/2.jpg" alt="图片2" onclick="openLightbox(1)">
+            <img src="images/3.jpg" alt="图片3" onclick="openLightbox(2)">
+            <img src="images/4.jpg" alt="图片4" onclick="openLightbox(3)">
+            <img src="images/5.jpg" alt="图片5" onclick="openLightbox(4)">
+            <img src="images/6.jpg" alt="图片6" onclick="openLightbox(5)">
+        </div>
+    </div>
+
+    <!-- 轮播图 -->
+    <div class="slideshow-container">
+        <div class="mySlides fade">
+            <img src="images/7.jpg" alt="轮播图1">
+        </div>
+        <div class="mySlides fade">
+            <img src="images/8.jpg" alt="轮播图2">
+        </div>
+        <div class="mySlides fade">
+            <img src="images/9.jpg" alt="轮播图3">
+        </div>
+
+        <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+        <a class="next" onclick="plusSlides(1)">&#10095;</a>
+
+        <div class="dots-container">
+            <span class="dot" onclick="currentSlide(1)"></span>
+            <span class="dot" onclick="currentSlide(2)"></span>
+            <span class="dot" onclick="currentSlide(3)"></span>
+        </div>
+    </div>
+
+    <div id="lightbox" class="lightbox">
+        <span class="close" onclick="closeLightbox()">&times;</span>
+        <div class="lightbox-content">
+            <img id="lightbox-image" src="">
+            <div class="navigation">
+                <button class="prev" onclick="changeImage(-1)">&#10094;</button>
+                <button class="next" onclick="changeImage(1)">&#10095;</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const images = ["images/1.jpg", "images/2.jpg", "images/3.jpg", "images/4.jpg", "images/5.jpg", "images/6.jpg"];
+        let currentIndex = 0;
+
+        function openLightbox(index) {
+            document.getElementById("lightbox").style.display = "flex";
+            currentIndex = index;
+            document.getElementById("lightbox-image").src = images[currentIndex];
+        }
+
+        function closeLightbox() {
+            document.getElementById("lightbox").style.display = "none";
+        }
+
+        function changeImage(step) {
+            currentIndex += step;
+            if (currentIndex >= images.length) {
+                currentIndex = 0;
+            } else if (currentIndex < 0) {
+                currentIndex = images.length - 1;
+            }
+            document.getElementById("lightbox-image").src = images[currentIndex];
+        }
+
+        // 点击图片外区域关闭弹窗
+        window.onclick = function(event) {
+            const lightbox = document.getElementById("lightbox");
+            if (event.target === lightbox) {
+                closeLightbox();
+            }
+        }
+
+        // 轮播图功能
+        let slideIndex = 1;
+        showSlides(slideIndex);
+
+        function plusSlides(n) {
+            showSlides(slideIndex += n);
+        }
+
+        function currentSlide(n) {
+            showSlides(slideIndex = n);
+        }
+
+        function showSlides(n) {
+            let i;
+            let slides = document.getElementsByClassName("mySlides");
+            let dots = document.getElementsByClassName("dot");
+
+            if (n > slides.length) {
+                slideIndex = 1
+            }
+            if (n < 1) {
+                slideIndex = slides.length
+            }
+
+            for (i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";
+            }
+
+            for (i = 0; i < dots.length; i++) {
+                dots[i].className = dots[i].className.replace(" active", "");
+            }
+
+            slides[slideIndex - 1].style.display = "block";
+            dots[slideIndex - 1].className += " active";
+        }
+
+        // 自动轮播
+        setInterval(function() {
+            plusSlides(1);
+        }, 4000);
+    </script>
+</body>
+
+</html>
